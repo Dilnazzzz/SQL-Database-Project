@@ -26,15 +26,23 @@ CREATE TABLE SALES (
     FOREIGN KEY (AGENTNAME) REFERENCES HOUSES(AGENTNAME)
 );
 
-INSERT INTO HOUSES VALUES (1, 'Neha Haines', 2, 1, 250000, 14738, '2022-11-01', 'Pamela Charles', 'New York', "Not Sold");
-INSERT INTO HOUSES VALUES (2, 'Luis Taylor', 3, 1, 450000, 84003, '2022-11-02', 'Timothy Hansen', 'New York', "Not Sold");
-INSERT INTO HOUSES VALUES (3, 'Neha Haines', 4, 2, 500000, 34003, '2022-11-03', 'Pamela Charles', 'New York', "Not Sold");
+INSERT INTO HOUSES VALUES (1, 'Summer Gallegos', 6, 1, 2553500, 81231, '2020-06-24', 'Karen Cisneros', 'New York', 'Not Sold'); 
+INSERT INTO HOUSES VALUES (2, 'Liam Hood', 4, 1, 1715212, 74420, '2020-08-23', 'Dillon Mcclure', 'Los Angeles', 'Not Sold');
+INSERT INTO HOUSES VALUES (3, 'Enzo Burgess', 5, 3, 2532682, 19424, '2020-09-26', 'Seth Mcleod', 'Los Angeles', 'Not Sold');
+INSERT INTO HOUSES VALUES (4, 'Mackenzie Lambert', 5, 3, 2421988, 60784, '2020-05-10', 'Liam Hanson', 'New York', 'Not Sold');
+INSERT INTO HOUSES VALUES (5, 'Danielle Bowers', 2, 2, 131126, 46878, '2020-06-01', 'Verity Morrow', 'New York', 'Not Sold');
+INSERT INTO HOUSES VALUES (6, 'Elsa Collier', 7, 1, 1256833, 65969, '2021-07-27', 'Ishaq Matthams', 'Chicago', 'Not Sold');
+INSERT INTO HOUSES VALUES (7, 'Samira Burns', 1, 2, 2258594, 75485, '2021-10-23', 'Liam Hanson', 'New York', 'Not Sold');
+INSERT INTO HOUSES VALUES (8, 'Hector Galvan', 4, 3, 1010053, 49853, '2021-07-01', 'Seth Mcleod', 'Houston', 'Not Sold');
+INSERT INTO HOUSES VALUES (9, 'Katy Mcintosh', 1, 1, 2009602, 56207, '2021-04-13', 'Karen Cisneros', 'New York', 'Not Sold');
+INSERT INTO HOUSES VALUES (10, 'Miles Raymond', 7, 3, 2338257, 60963, '2021-12-13'), 'Conor Wood', 'Chicago', 'Not Sold')
 
 
-INSERT INTO SALES VALUES (10, 1, 'Lacie Rollins', 250000, 'Pamela Charles', '2022-11-05', 'New York');
-INSERT INTO SALES VALUES (11, 3, 'Alice Christian', 450000, 'Pamela Charles', '2022-11-05', 'New York');
-INSERT INTO SALES VALUES (12, 2, 'Alice Christian', 450000, 'Timothy Hansen', '2022-11-05', 'San Francisco');
-
+INSERT INTO SALES VALUES (10, 1, 'Lacie Rollins', 250000, 'Karen Cisneros', '2022-11-05', 'New York');
+INSERT INTO SALES VALUES (11, 3, 'Alice Christian', 450000, 'Seth Mcleod', '2022-11-05', 'New York');
+INSERT INTO SALES VALUES (12, 6, 'Alice Christian', 450000, 'Ishaq Matthams', '2022-11-05', 'San Francisco');
+INSERT INTO SALES VALUES (13, 10, 'Alice Christian', 450000, 'Conor Wood', '2022-11-05', 'San Francisco');
+INSERT INTO SALES VALUES (14, 2, 'Alice Christian', 450000, 'Dillon Mcclure', '2022-11-05', 'San Francisco');
 
 SELECT '';
 SELECT "Find the top 5 offices with the most sales for that month";
