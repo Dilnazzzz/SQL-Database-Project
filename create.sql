@@ -11,7 +11,13 @@ CREATE TABLE HOUSES (
     LISTINGDATE DATETIME,
     AGENTNAME VARCHAR(20),
     OFFICE VARCHAR(20),
-    STATUS INTEGER
+    STATUS VARCHAR(20)
+);
+
+CREATE TABLE AGENTS (
+    AGENTID INTEGER PRIMARY KEY,
+    NAME VARCHAR(20),
+    EMAIL VARCHAR(100)
 );
 
 CREATE TABLE SALES (
@@ -19,12 +25,16 @@ CREATE TABLE SALES (
     HOUSEID INTEGER,
     BUYERRNAME VARCHAR(20),
     SALEPRICE INTEGER,
+    AGENTID INTEGER,
     AGENTNAME VARCHAR(20),
     SOLDDATE DATETIME, 
     OFFICE VARCHAR(20),
+    STATUS VARCHAR(20),
     FOREIGN KEY (HOUSEID) REFERENCES HOUSES(HOUSEID),
-    FOREIGN KEY (AGENTNAME) REFERENCES HOUSES(AGENTNAME)
+    FOREIGN KEY (AGENTID) REFERENCES AGENTS(AGENTID)
 );
+
+
 
 INSERT INTO HOUSES VALUES (1, 'Summer Gallegos', 6, 1, 1553000, 81231, '2020-01-04', 'Karen Cisneros', 'New York', 'Not Sold'); 
 INSERT INTO HOUSES VALUES (2, 'Liam Hood', 4, 1, 715000, 74420, '2020-01-04', 'Dillon Mcclure', 'Los Angeles', 'Not Sold');
@@ -47,52 +57,67 @@ INSERT INTO HOUSES VALUES (18, 'Elspeth Case', 5, 1, 595000, 25135, '2020-01-27'
 INSERT INTO HOUSES VALUES (19, 'Dewi Howard', 4, 2, 756000, 18552, '2020-01-31', 'Karen Cisneros', 'San Antonio', 'Not Sold');
 INSERT INTO HOUSES VALUES (20, 'Sasha Little', 2, 3, 806000, 81638, '2020-01-31', 'Verity Morrow', 'Chicago', 'Not Sold');
 
-INSERT INTO SALES VALUES (110, 1, 'Lacie Rollins', 1153000, 'Karen Cisneros', '2020-04-05', 'New York');
-INSERT INTO SALES VALUES (111, 3, 'Alice Christian', 632000, 'Seth Mcleod', '2020-04-05', 'Phoenix');
-INSERT INTO SALES VALUES (112, 6, 'Neave Gregory', 1356000, 'Ishaq Matthams', '2020-04-07', 'Chicago');
-INSERT INTO SALES VALUES (113, 10, 'Amelia Archer', 438000, 'Conor Wood', '2020-04-09', 'Chicago');
-INSERT INTO SALES VALUES (114, 12, 'Jorge Gilmore', 96000, 'Ishaq Matthams', '2020-04-15', 'New York');
-INSERT INTO SALES VALUES (115, 13, 'Ameer Watson', 348000, 'Dillon Mcclure', '2020-04-15', 'Philadelphia');
-INSERT INTO SALES VALUES (116, 14, 'Sana Berger', 588000, 'Seth Mcleod', '2020-04-16', 'Chicago');
-INSERT INTO SALES VALUES (117, 15, 'Hajra Middleton', 663000, 'Dillon Mcclure', '2020-04-17', 'Los Angeles');
-INSERT INTO SALES VALUES (118, 17, 'Drew Boyd', 945000, 'Cameron Ford', '2020-04-18', 'Dallas');
-INSERT INTO SALES VALUES (119, 19, 'Omar Bowers', 456000, 'Karen Cisneros', '2020-04-18', 'San Antonio');
-INSERT INTO SALES VALUES (120, 20, 'Marwa Hardy', 506000, 'Verity Morrow', '2020-04-25', 'Chicago');
+INSERT INTO AGENTS VALUES (1001, 'Seth Mcleod', 'seth.agent@gmail.com');
+INSERT INTO AGENTS VALUES (1002, 'Liam Hanson', 'liam.agent@gmail.com');
+INSERT INTO AGENTS VALUES (1003, 'Dillon Mcclure', 'dillon.agent@gmail.com');
+INSERT INTO AGENTS VALUES (1004, 'Cameron Ford', 'cameron.agent@gmail.com');
+INSERT INTO AGENTS VALUES (1005, 'Karen Cisneros', 'karen.agent@gmail.com');
+INSERT INTO AGENTS VALUES (1006, 'Ishaq Matthams', 'ishaq.agent@gmail.com');
+INSERT INTO AGENTS VALUES (1007, 'Henry Griffin', 'henry.agent@gmail.com');
+INSERT INTO AGENTS VALUES (1008, 'Verity Morrow', 'verity.agent@gmail.com');
+INSERT INTO AGENTS VALUES (1009, 'Conor Wood', 'conor.agent@gmail.com');
+INSERT INTO AGENTS VALUES (1010, 'Karol Duncan', 'karol.agent@gmail.com');
 
+INSERT INTO SALES VALUES (111, 1, 'Lacie Rollins', 1153000, 1005, 'Karen Cisneros', '2020-04-05', 'New York', 'Sold');
+INSERT INTO SALES VALUES (112, 3, 'Alice Christian', 632000, 1001, 'Seth Mcleod', '2020-04-05', 'Phoenix', 'Sold');
+INSERT INTO SALES VALUES (113, 6, 'Neave Gregory', 1356000, 1006, 'Ishaq Matthams', '2020-04-07', 'Chicago', 'Sold');
+INSERT INTO SALES VALUES (114, 12, 'Jorge Gilmore', 96000, 1006, 'Ishaq Matthams', '2020-04-15', 'New York', 'Sold');
+INSERT INTO SALES VALUES (115, 13, 'Ameer Watson', 348000, 1003, 'Dillon Mcclure', '2020-04-15', 'Philadelphia', 'Sold');
+INSERT INTO SALES VALUES (116, 14, 'Sana Berger', 588000, 1001, 'Seth Mcleod', '2020-04-16', 'Chicago', 'Sold');
+INSERT INTO SALES VALUES (117, 15, 'Hajra Middleton', 663000, 1003, 'Dillon Mcclure', '2020-04-17', 'Los Angeles', 'Sold');
+INSERT INTO SALES VALUES (118, 17, 'Drew Boyd', 945000, 1004, 'Cameron Ford', '2020-04-18', 'Dallas', 'Sold');
+INSERT INTO SALES VALUES (119, 19, 'Omar Bowers', 456000, 1005, 'Karen Cisneros', '2020-04-18', 'San Antonio', 'Sold');
+INSERT INTO SALES VALUES (120, 20, 'Marwa Hardy', 506000, 1008, 'Verity Morrow', '2020-04-25', 'Chicago', 'Sold');
+
+UPDATE HOUSES SET STATUS = (SELECT STATUS FROM SALES WHERE HOUSEID = HOUSES.HOUSEID) 
+where EXISTS (SELECT STATUS FROM SALES WHERE HOUSEID = HOUSES.HOUSEID);
+                     
+                  
 SELECT '';
 SELECT "Find the top 5 offices with the most sales for that month";
 SELECT '----------------------------------------------------';
-SELECT OFFICE FROM SALES
-    GROUP BY OFFICE
-    ORDER By COUNT(*) DESC LIMIT 5;
+SELECT OFFICE, SUM(SALEPRICE) FROM SALES WHERE strftime('%m',SALES.SOLDDATE) = strftime('%m','2020-04-01')
+    GROUP BY OFFICE 
+    ORDER By SUM(SALEPRICE) DESC LIMIT 5;
 
     
 SELECT '';
 SELECT "Find the top 5 estate agents who have sold the most for the month (include their contact details and their sales details so that it is easy contact them and congratulate them)";
 SELECT '----------------------------------------------------';
-SELECT AGENTNAME FROM SALES
+SELECT SALES.AGENTNAME, AGENTS.EMAIL, SUM(SALES.SALEPRICE) FROM SALES JOIN AGENTS ON SALES.AGENTID = AGENTS.AGENTID WHERE strftime('%m',SALES.SOLDDATE) = strftime('%m','2020-04-01')
     GROUP BY AGENTNAME
-    ORDER By COUNT(*) DESC LIMIT 5;
+    ORDER By SUM(SALEPRICE) DESC LIMIT 5;
+
 
 SELECT '';
 SELECT "Calculate the commission that each estate agent must receive and store the results in a separate table";
 SELECT '----------------------------------------------------';
 
-
 CREATE TABLE ALLCOMISSIONS (
     AGENTNAME VARCHAR(20),
-    COMMISSION INTEGER
+    COMMISSION INTEGER,
+    SOLDDATE DATETIME
 );
 
-INSERT INTO ALLCOMISSIONS (AGENTNAME, COMMISSION)
-SELECT AGENTNAME, SALEPRICE * 0.1 FROM SALES WHERE SALEPRICE < 100000 union all
-SELECT AGENTNAME, SALEPRICE * 0.075 FROM SALES WHERE SALEPRICE > 100000 and SALEPRICE < 200000 union all
-SELECT AGENTNAME, SALEPRICE * 0.06 FROM SALES WHERE SALEPRICE > 200000 and SALEPRICE < 500000 union all
-SELECT AGENTNAME, SALEPRICE * 0.05 FROM SALES WHERE SALEPRICE > 500000 and SALEPRICE < 1000000 union all
-SELECT AGENTNAME, SALEPRICE * 0.04 FROM SALES WHERE SALEPRICE > 1000000;
+INSERT INTO ALLCOMISSIONS (AGENTNAME, COMMISSION, SOLDDATE)
+SELECT AGENTNAME, SALEPRICE * 0.1, SOLDDATE FROM SALES WHERE SALEPRICE < 100000 union all
+SELECT AGENTNAME, SALEPRICE * 0.075, SOLDDATE FROM SALES WHERE SALEPRICE > 100000 and SALEPRICE < 200000 union all
+SELECT AGENTNAME, SALEPRICE * 0.06, SOLDDATE FROM SALES WHERE SALEPRICE > 200000 and SALEPRICE < 500000 union all
+SELECT AGENTNAME, SALEPRICE * 0.05, SOLDDATE FROM SALES WHERE SALEPRICE > 500000 and SALEPRICE < 1000000 union all
+SELECT AGENTNAME, SALEPRICE * 0.04, SOLDDATE FROM SALES WHERE SALEPRICE > 1000000;
 
 CREATE TABLE AGENTCOMISSION AS 
-SELECT AGENTNAME, SUM(COMMISSION) FROM ALLCOMISSIONS GROUP BY AGENTNAME;
+SELECT AGENTNAME, SUM(COMMISSION) FROM ALLCOMISSIONS WHERE strftime('%m',ALLCOMISSIONS.SOLDDATE) = strftime('%m','2020-04-01') GROUP BY AGENTNAME;
 
 SELECT * FROM AGENTCOMISSION;
 
@@ -101,15 +126,14 @@ SELECT '';
 SELECT "For all houses that were sold that month, calculate the average number of days on the market";
 SELECT '----------------------------------------------------';
 
-
 SELECT AVG(JULIANDAY(SALES.SOLDDATE) - JULIANDAY(HOUSES.LISTINGDATE)) 
-FROM HOUSES JOIN SALES ON HOUSES.HOUSEID = SALES.HOUSEID WHERE strftime('%m',SALES.SOLDDATE) = strftime('%m','2022-11-01');
+FROM HOUSES JOIN SALES ON HOUSES.HOUSEID = SALES.HOUSEID WHERE strftime('%m',SALES.SOLDDATE) = strftime('%m','2020-04-01');
     
 
 SELECT '';
 SELECT "For all houses that were sold that month, calculate the average selling price";
 SELECT '----------------------------------------------------';
 SELECT AVG(SALES.SALEPRICE)
-FROM HOUSES JOIN SALES ON HOUSES.HOUSEID = SALES.HOUSEID WHERE strftime('%m',SALES.SOLDDATE) = strftime('%m','2022-11-01');
+FROM HOUSES JOIN SALES ON HOUSES.HOUSEID = SALES.HOUSEID WHERE strftime('%m',SALES.SOLDDATE) = strftime('%m','2020-04-01');
     
     
