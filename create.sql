@@ -34,8 +34,6 @@ CREATE TABLE SALES (
     FOREIGN KEY (AGENTID) REFERENCES AGENTS(AGENTID)
 );
 
-
-
 INSERT INTO HOUSES VALUES (1, 'Summer Gallegos', 6, 1, 1553000, 81231, '2020-01-04', 'Karen Cisneros', 'New York', 'Not Sold'); 
 INSERT INTO HOUSES VALUES (2, 'Liam Hood', 4, 1, 715000, 74420, '2020-01-04', 'Dillon Mcclure', 'Los Angeles', 'Not Sold');
 INSERT INTO HOUSES VALUES (3, 'Enzo Burgess', 5, 3, 532000, 19424, '2020-01-06', 'Seth Mcleod', 'Phoenix', 'Not Sold');
@@ -79,10 +77,12 @@ INSERT INTO SALES VALUES (118, 17, 'Drew Boyd', 945000, 1004, 'Cameron Ford', '2
 INSERT INTO SALES VALUES (119, 19, 'Omar Bowers', 456000, 1005, 'Karen Cisneros', '2020-04-18', 'San Antonio', 'Sold');
 INSERT INTO SALES VALUES (120, 20, 'Marwa Hardy', 506000, 1008, 'Verity Morrow', '2020-04-25', 'Chicago', 'Sold');
 
+
+/* UPDATING THE STATUS OF HOUSES IN TABLE HOUSES TO SOLD IF THEIR ID MATCH IDS OF HOUSES IN TABLE SALES */
 UPDATE HOUSES SET STATUS = (SELECT STATUS FROM SALES WHERE HOUSEID = HOUSES.HOUSEID) 
 where EXISTS (SELECT STATUS FROM SALES WHERE HOUSEID = HOUSES.HOUSEID);
                      
-                  
+/* QUERY #1 */              
 SELECT '';
 SELECT "Find the top 5 offices with the most sales for that month";
 SELECT '----------------------------------------------------';
@@ -90,15 +90,16 @@ SELECT OFFICE, SUM(SALEPRICE) FROM SALES WHERE strftime('%m',SALES.SOLDDATE) = s
     GROUP BY OFFICE 
     ORDER By SUM(SALEPRICE) DESC LIMIT 5;
 
-    
+/* QUERY #2 */      
 SELECT '';
 SELECT "Find the top 5 estate agents who have sold the most for the month (include their contact details and their sales details so that it is easy contact them and congratulate them)";
 SELECT '----------------------------------------------------';
-SELECT SALES.AGENTNAME, AGENTS.EMAIL, SUM(SALES.SALEPRICE) FROM SALES JOIN AGENTS ON SALES.AGENTID = AGENTS.AGENTID WHERE strftime('%m',SALES.SOLDDATE) = strftime('%m','2020-04-01')
+SELECT SALES.AGENTNAME, AGENTS.EMAIL, SUM(SALES.SALEPRICE) FROM SALES 
+JOIN AGENTS ON SALES.AGENTID = AGENTS.AGENTID WHERE strftime('%m',SALES.SOLDDATE) = strftime('%m','2020-04-01')
     GROUP BY AGENTNAME
     ORDER By SUM(SALEPRICE) DESC LIMIT 5;
 
-
+/* QUERY #3 */   
 SELECT '';
 SELECT "Calculate the commission that each estate agent must receive and store the results in a separate table";
 SELECT '----------------------------------------------------';
@@ -117,23 +118,26 @@ SELECT AGENTNAME, SALEPRICE * 0.05, SOLDDATE FROM SALES WHERE SALEPRICE > 500000
 SELECT AGENTNAME, SALEPRICE * 0.04, SOLDDATE FROM SALES WHERE SALEPRICE > 1000000;
 
 CREATE TABLE AGENTCOMISSION AS 
-SELECT AGENTNAME, SUM(COMMISSION) FROM ALLCOMISSIONS WHERE strftime('%m',ALLCOMISSIONS.SOLDDATE) = strftime('%m','2020-04-01') GROUP BY AGENTNAME;
+SELECT AGENTNAME, SUM(COMMISSION) FROM ALLCOMISSIONS 
+WHERE strftime('%m',ALLCOMISSIONS.SOLDDATE) = strftime('%m','2020-04-01') GROUP BY AGENTNAME;
 
 SELECT * FROM AGENTCOMISSION;
 
-
+/* QUERY #4 */   
 SELECT '';
 SELECT "For all houses that were sold that month, calculate the average number of days on the market";
 SELECT '----------------------------------------------------';
 
 SELECT AVG(JULIANDAY(SALES.SOLDDATE) - JULIANDAY(HOUSES.LISTINGDATE)) 
-FROM HOUSES JOIN SALES ON HOUSES.HOUSEID = SALES.HOUSEID WHERE strftime('%m',SALES.SOLDDATE) = strftime('%m','2020-04-01');
+FROM HOUSES JOIN SALES ON HOUSES.HOUSEID = SALES.HOUSEID 
+WHERE strftime('%m',SALES.SOLDDATE) = strftime('%m','2020-04-01');
     
-
+/* QUERY #5 */   
 SELECT '';
 SELECT "For all houses that were sold that month, calculate the average selling price";
 SELECT '----------------------------------------------------';
 SELECT AVG(SALES.SALEPRICE)
-FROM HOUSES JOIN SALES ON HOUSES.HOUSEID = SALES.HOUSEID WHERE strftime('%m',SALES.SOLDDATE) = strftime('%m','2020-04-01');
+FROM HOUSES JOIN SALES ON HOUSES.HOUSEID = SALES.HOUSEID 
+WHERE strftime('%m',SALES.SOLDDATE) = strftime('%m','2020-04-01');
     
     
