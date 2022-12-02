@@ -47,17 +47,17 @@ INSERT INTO HOUSES VALUES (18, 'Elspeth Case', 5, 1, 595000, 25135, '2020-01-27'
 INSERT INTO HOUSES VALUES (19, 'Dewi Howard', 4, 2, 756000, 18552, '2020-01-31', 'Karen Cisneros', 'San Antonio', 'Not Sold');
 INSERT INTO HOUSES VALUES (20, 'Sasha Little', 2, 3, 806000, 81638, '2020-01-31', 'Verity Morrow', 'Chicago', 'Not Sold');
 
-INSERT INTO SALES VALUES (10, 1, 'Lacie Rollins', 1153000, 'Karen Cisneros', '2020-04-05', 'New York');
-INSERT INTO SALES VALUES (11, 3, 'Alice Christian', 632000, 'Seth Mcleod', '2020-04-05', 'Phoenix');
-INSERT INTO SALES VALUES (12, 6, 'Neave Gregory', 1356000, 'Ishaq Matthams', '2020-04-07', 'Chicago');
-INSERT INTO SALES VALUES (13, 10, 'Amelia Archer', 438000, 'Conor Wood', '2020-04-09', 'Chicago');
-INSERT INTO SALES VALUES (14, 12, 'Jorge Gilmore', 96000, 'Ishaq Matthams', '2020-04-15', 'New York');
-INSERT INTO SALES VALUES (15, 13, 'Ameer Watson', 348000, 'Dillon Mcclure', '2020-04-15', 'Philadelphia');
-INSERT INTO SALES VALUES (16, 14, 'Sana Berger', 588000, 'Seth Mcleod', '2020-04-16', 'Chicago');
-INSERT INTO SALES VALUES (17, 15, 'Hajra Middleton', 663000, 'Dillon Mcclure', '2020-04-17', 'Los Angeles');
-INSERT INTO SALES VALUES (18, 17, 'Drew Boyd', 945000, 'Cameron Ford', '2020-04-18', 'Dallas');
-INSERT INTO SALES VALUES (19, 19, 'Omar Bowers', 456000, 'Karen Cisneros', '2020-04-18', 'San Antonio');
-INSERT INTO SALES VALUES (20, 20, 'Marwa Hardy', 506000, 'Verity Morrow', '2020-04-25', 'Chicago');
+INSERT INTO SALES VALUES (110, 1, 'Lacie Rollins', 1153000, 'Karen Cisneros', '2020-04-05', 'New York');
+INSERT INTO SALES VALUES (111, 3, 'Alice Christian', 632000, 'Seth Mcleod', '2020-04-05', 'Phoenix');
+INSERT INTO SALES VALUES (112, 6, 'Neave Gregory', 1356000, 'Ishaq Matthams', '2020-04-07', 'Chicago');
+INSERT INTO SALES VALUES (113, 10, 'Amelia Archer', 438000, 'Conor Wood', '2020-04-09', 'Chicago');
+INSERT INTO SALES VALUES (114, 12, 'Jorge Gilmore', 96000, 'Ishaq Matthams', '2020-04-15', 'New York');
+INSERT INTO SALES VALUES (115, 13, 'Ameer Watson', 348000, 'Dillon Mcclure', '2020-04-15', 'Philadelphia');
+INSERT INTO SALES VALUES (116, 14, 'Sana Berger', 588000, 'Seth Mcleod', '2020-04-16', 'Chicago');
+INSERT INTO SALES VALUES (117, 15, 'Hajra Middleton', 663000, 'Dillon Mcclure', '2020-04-17', 'Los Angeles');
+INSERT INTO SALES VALUES (118, 17, 'Drew Boyd', 945000, 'Cameron Ford', '2020-04-18', 'Dallas');
+INSERT INTO SALES VALUES (119, 19, 'Omar Bowers', 456000, 'Karen Cisneros', '2020-04-18', 'San Antonio');
+INSERT INTO SALES VALUES (120, 20, 'Marwa Hardy', 506000, 'Verity Morrow', '2020-04-25', 'Chicago');
 
 SELECT '';
 SELECT "Find the top 5 offices with the most sales for that month";
