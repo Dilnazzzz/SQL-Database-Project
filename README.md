@@ -7,10 +7,9 @@ I built a database system for a real estate company. The project consists of thr
 1. When a new house is listed for sale, it is recorded to the HOUSES table along with the following information: seller name, # of bedrooms, # of bathrooms, listing price, zip code, date of listing, the listing estate agent, the appropriate office, the status of the listing which is "Not sold" by default. 
 2. When a house is sold, it is recorded in the SALES table, which captures unique house id, buyer name, sale price, agent id, agent name, date of sale, the responsible office, and the status of the listing which is by default "Sold." When a house is inserted into the Sales table, its status is changed to "Sold" in the original Houses table to reflect its new status. 
 
-### Normalization and indices
-* I used data normalization principles to ensure consistency within a database. 
-* 
-
+### Normalization and Indices
+* I used data normalization principles to ensure consistency within a database. Specifically, tables AGENTS, HOUSES, and SALES have unique primary keys to identify each row uniquely. It allowed me to achieve 1NF since there are no duplicated rows in the table, each cell is single-valued, and entries in a column are the same. Three tables are also in 2NF since it is in 1NF and has no partial dependencies. It also meets 3NF since there is no transitive dependency. As a result, it is easier to make queries and add and remove data. In addition, this minimizes duplicate data, avoids data modification issues, and simplifies queries. 
+* I created indices for the main variables in the query. For example, for the fourth query, I created indices for LISTINGDATE and SOLDDATE. The purpose is to speed up the run time of the query. The changes become significant as more data is added to tables.
 
 ### Querying data
 
