@@ -86,6 +86,11 @@ where EXISTS (SELECT STATUS FROM SALES WHERE HOUSEID = HOUSES.HOUSEID);
 SELECT '';
 SELECT "Find the top 5 offices with the most sales for that month";
 SELECT '----------------------------------------------------';
+
+CREATE UNIQUE INDEX office_com_id ON SALES(OFFICE);
+CREATE UNIQUE INDEX saleid_com_id ON SALES(SALEID);
+CREATE UNIQUE INDEX houseid_com_id ON HOUSES(HOUSEID);
+
 SELECT OFFICE, SUM(SALEPRICE) FROM SALES WHERE strftime('%m',SALES.SOLDDATE) = strftime('%m','2020-04-01')
     GROUP BY OFFICE 
     ORDER By SUM(SALEPRICE) DESC LIMIT 5;
@@ -94,6 +99,9 @@ SELECT OFFICE, SUM(SALEPRICE) FROM SALES WHERE strftime('%m',SALES.SOLDDATE) = s
 SELECT '';
 SELECT "Find the top 5 estate agents who have sold the most for the month (include their contact details and their sales details so that it is easy contact them and congratulate them)";
 SELECT '----------------------------------------------------';
+
+CREATE UNIQUE INDEX agentid_com_id ON AGENTS(AGENTID);
+
 SELECT SALES.AGENTNAME, AGENTS.EMAIL, SUM(SALES.SALEPRICE) FROM SALES 
 JOIN AGENTS ON SALES.AGENTID = AGENTS.AGENTID WHERE strftime('%m',SALES.SOLDDATE) = strftime('%m','2020-04-01')
     GROUP BY AGENTNAME
@@ -109,6 +117,8 @@ CREATE TABLE ALLCOMISSIONS (
     COMMISSION INTEGER,
     SOLDDATE DATETIME
 );
+
+CREATE UNIQUE INDEX agentname_com_id ON SALES(AGENTNAME);
 
 INSERT INTO ALLCOMISSIONS (AGENTNAME, COMMISSION, SOLDDATE)
 SELECT AGENTNAME, SALEPRICE * 0.1, SOLDDATE FROM SALES WHERE SALEPRICE < 100000 union all
@@ -128,6 +138,9 @@ SELECT '';
 SELECT "For all houses that were sold that month, calculate the average number of days on the market";
 SELECT '----------------------------------------------------';
 
+CREATE UNIQUE INDEX solddate_com_id ON SALES(SOLDDATE);
+CREATE UNIQUE INDEX listingdate_com_id ON HOUSES(LISTINGDATE);
+
 SELECT AVG(JULIANDAY(SALES.SOLDDATE) - JULIANDAY(HOUSES.LISTINGDATE)) 
 FROM HOUSES JOIN SALES ON HOUSES.HOUSEID = SALES.HOUSEID 
 WHERE strftime('%m',SALES.SOLDDATE) = strftime('%m','2020-04-01');
@@ -136,6 +149,9 @@ WHERE strftime('%m',SALES.SOLDDATE) = strftime('%m','2020-04-01');
 SELECT '';
 SELECT "For all houses that were sold that month, calculate the average selling price";
 SELECT '----------------------------------------------------';
+
+CREATE UNIQUE INDEX saleprice_com_id ON SALES(SALEPRICE);
+
 SELECT AVG(SALES.SALEPRICE)
 FROM HOUSES JOIN SALES ON HOUSES.HOUSEID = SALES.HOUSEID 
 WHERE strftime('%m',SALES.SOLDDATE) = strftime('%m','2020-04-01');
